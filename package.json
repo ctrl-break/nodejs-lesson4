@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/ctrl-break/nodejs-lesson4/issues"
   },
-  "homepage": "https://github.com/ctrl-break/nodejs-lesson4#readme"
+  "homepage": "https://github.com/ctrl-break/nodejs-lesson4#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "consolidate": "^0.14.1",
+    "express": "^4.14.0",
+    "handlebars": "^4.0.5",
+    "jquery": "^1.12.4"
+  }
 }
