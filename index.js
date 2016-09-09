@@ -7,10 +7,6 @@ var template = require('consolidate').handlebars;
 
 const PORT = 8000;
 
-var result = makenews.meduza( function(data){ console.log(data); }, 5);
-
-console.log(typeof result + "****++++");
-
 var app = express();
 
 // Определяем обработчик шаблонов
@@ -24,20 +20,25 @@ app.set('views', __dirname + '/views');
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use('/css', express.static(__dirname + '/views/css')); // redirect CSS bootstrap
+app.use('/fonts', express.static(__dirname + '/node_modules/bootstrap/dist/fonts')); // redirect fonts
 
 // Разбираем application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded() );
 
-// Разбираем application/json
-app.use( bodyParser.json() );
+app.post('/', function (req, res) {
+  // Рендеринг шаблона
+  makenews.news( function(data){
+        res.render('index', {
+          news: data,
+          newsNum: req.body.newsNum
+        });
+    }, req.body.newsNum);
+});
 
 app.get('/', function (req, res) {
-  // Рендеринг шаблона
-  res.render('index', {
-    moment: new Date(),
-    news: makenews
-    //action: result( function(data){ return data; }, 5)
-  });
+  res.render('index');
+
 });
 
 app.listen(8000, function () {

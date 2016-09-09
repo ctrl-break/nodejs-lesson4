@@ -1,0 +1,16 @@
+#carousel{
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.carousel-caption {
+    right: 10%;
+    left: 10%;
+    bottom: 10px;
+    padding-bottom: 0;
+}
+
+form{
+  max-width: 20%;
+  margin: 40px auto 20px;
+}
