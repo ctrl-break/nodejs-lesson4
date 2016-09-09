@@ -49,9 +49,15 @@
         <form action="/" method="POST">
             <div class="form-group">
               <label for="newsNum">Количество новостей</label>
-              <input type="text" name="newsNum" class="form-control" placeholder="Количество новостей" value="{{#if newsNum}}{{newsNum}}{{/if}}">  
+              <input type="text" name="newsNum" class="form-control" placeholder="Количество новостей" value="{{#if newsNum}}{{newsNum}}{{/if}}">
             </div>
+
             <button type="submit" class="btn btn-default">Submit</button>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="remember"> Запомнить настройки
+              </label>
+            </div>
         </form>
 
     </div>

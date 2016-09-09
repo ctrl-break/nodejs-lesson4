@@ -4,8 +4,10 @@ var makenews = require('./news.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var template = require('consolidate').handlebars;
+var cookieParser = require('cookie-parser');
 
 const PORT = 8000;
+const MONTH = 2678400;
 
 var app = express();
 
@@ -26,19 +28,33 @@ app.use('/fonts', express.static(__dirname + '/node_modules/bootstrap/dist/fonts
 // Разбираем application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded() );
 
+app.use(cookieParser());
+
 app.post('/', function (req, res) {
-  // Рендеринг шаблона
   makenews.news( function(data){
         res.render('index', {
           news: data,
           newsNum: req.body.newsNum
         });
     }, req.body.newsNum);
+
+  if (req.body.remember) {
+      res.cookie('params', req.body.newsNum, { maxAge: MONTH });
+  };
 });
 
 app.get('/', function (req, res) {
-  res.render('index');
-
+  //Рендеринг шаблона
+  if (req.cookies.params) {
+      makenews.news( function(data){
+            res.render('index', {
+              news: data,
+              newsNum: req.cookies.params
+            });
+        }, req.cookies.params);
+  } else {
+    res.render('index');
+  };
 });
 
 app.listen(8000, function () {
