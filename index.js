@@ -44,7 +44,6 @@ app.post('/', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-  //Рендеринг шаблона
   if (req.cookies.params) {
       makenews.news( function(data){
             res.render('index', {
@@ -55,6 +54,11 @@ app.get('/', function (req, res) {
   } else {
     res.render('index');
   };
+});
+
+app.get('/forget', function (req, res) {
+  res.clearCookie('params');
+  res.redirect('back');
 });
 
 app.listen(PORT, function () {

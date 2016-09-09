@@ -16,8 +16,8 @@
   </head>
   <body>
     <div class="container">
-        <h1>Lesson4</h1>
-        <h2>Новости с сайта <a href="https://meduza.io/">meduza.io</a></h2>
+        <h1 class="text-center">Lesson4</h1class>
+        <h2 class="text-center">Новости с сайта <a href="https://meduza.io/">meduza.io</a></h2>
 
         {{#if news}}
         <div id="carousel" class="carousel slide" data-ride="carousel">
@@ -52,7 +52,8 @@
               <input type="text" name="newsNum" class="form-control" placeholder="Количество новостей" value="{{#if newsNum}}{{newsNum}}{{/if}}">
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/forget" class="btn btn-default">Reset</a>
             <div class="checkbox">
               <label>
                 <input type="checkbox" name="remember"> Запомнить настройки
