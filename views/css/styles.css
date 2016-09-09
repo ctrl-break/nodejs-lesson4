@@ -1,6 +1,7 @@
 #carousel{
   max-width: 800px;
   margin: 20px auto;
+  background-color: #000;
 }
 
 .carousel-caption {

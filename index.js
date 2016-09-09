@@ -1,5 +1,5 @@
 "use strict";
-var makenews = require('./news.js');
+var makenews = require('./news.js'); // Модуль получения новостей
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -57,6 +57,6 @@ app.get('/', function (req, res) {
   };
 });
 
-app.listen(8000, function () {
+app.listen(PORT, function () {
   console.log(`Server was running on: http://localhost:${PORT}`);
 });

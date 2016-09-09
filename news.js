@@ -20,10 +20,15 @@ module.exports.news = function(callback, newsNum) {
             if ( newsNum < 0 ) newsNum = 1;
 
             for(var i = 0; i < newsNum; i++){
+                let image = "";
+                if (res.rss.channel.item.at(i).enclosure) {
+                  image = res.rss.channel.item.at(i).enclosure.at(0).attributes().url;
+                };
+
                 result[i] = { 'title' : res.rss.channel.item.at(i).title.text(),
                               'pubdate' : res.rss.channel.item.at(i).pubDate.text(),
                               'description' : res.rss.channel.item.at(i).description.text(),
-                              'img' : res.rss.channel.item.at(i).enclosure.attributes().url,
+                              'img' : image,
                               'link' : res.rss.channel.item.at(i).link.text()
                             };
             }
