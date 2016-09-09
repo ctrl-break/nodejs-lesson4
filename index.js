@@ -31,20 +31,8 @@ app.use( bodyParser.urlencoded() );
 app.use(cookieParser());
 
 app.get('/', function (req, res) {
-  // /Если у клиента есть кука то используем её параметры
-  if (req.cookies.params) {
-      if ( !isNaN(req.cookies.params) && req.cookies.params > 0) {
-          makenews.news( function(data){
-                res.render('index', {
-                  news: data,
-                  newsNum: req.cookies.params
-                });
-            }, req.cookies.params);
-      };
-      return;
-  }
   // Если переданы GET параметры, проверяем их и выводим новости
-  else if ( req.param('newsnum') ) {
+  if ( req.param('newsnum') ) {
     if ( !isNaN(req.param('newsnum')) && req.param('newsnum') > 0) {
       makenews.news( function(data){
             res.render('index', {
@@ -54,7 +42,20 @@ app.get('/', function (req, res) {
         }, req.param('newsnum'));
     };
     return;
+  }
+  // /Если у клиента есть кука то используем её параметры
+  else if (req.cookies.params) {
+      if ( !isNaN(req.cookies.params) && req.cookies.params > 0) {
+          makenews.news( function(data){
+                res.render('index', {
+                  news: data,
+                  newsNum: req.cookies.params
+                });
+            }, req.cookies.params);
+      };
+      return;
   };
+
   res.render('index');  // Иначе пустой шаблон
 });
 
