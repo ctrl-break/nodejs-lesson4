@@ -30,35 +30,57 @@ app.use( bodyParser.urlencoded() );
 
 app.use(cookieParser());
 
-app.post('/', function (req, res) {
-  makenews.news( function(data){
-        res.render('index', {
-          news: data,
-          newsNum: req.body.newsNum
-        });
-    }, req.body.newsNum);
-
-  if (req.body.remember) {
-      res.cookie('params', req.body.newsNum, { maxAge: MONTH });
-  };
-});
-
 app.get('/', function (req, res) {
+  // /Если у клиента есть кука то используем её параметры
   if (req.cookies.params) {
+      if ( !isNaN(req.cookies.params) && req.cookies.params > 0) {
+          makenews.news( function(data){
+                res.render('index', {
+                  news: data,
+                  newsNum: req.cookies.params
+                });
+            }, req.cookies.params);
+      };
+      return;
+  }
+  // Если переданы GET параметры, проверяем их и выводим новости
+  else if ( req.param('newsnum') ) {
+    if ( !isNaN(req.param('newsnum')) && req.param('newsnum') > 0) {
       makenews.news( function(data){
             res.render('index', {
               news: data,
-              newsNum: req.cookies.params
+              newsNum: req.param('newsnum')
             });
-        }, req.cookies.params);
-  } else {
-    res.render('index');
+        }, req.param('newsnum'));
+    };
+    return;
   };
+  res.render('index');  // Иначе пустой шаблон
 });
 
 app.get('/forget', function (req, res) {
+  // Удаление куки
   res.clearCookie('params');
   res.redirect('back');
+});
+
+app.post('/', function (req, res) {
+  // Вызываем функцию запроса новостей и передаем результат в шаблон
+  if ( !isNaN(req.body.newsNum) && req.body.newsNum > 0) {
+      makenews.news( function(data){
+            res.render('index', {
+              news: data,
+              newsNum: req.body.newsNum
+            });
+        }, req.body.newsNum);
+
+      // Сохраняем куку
+      if (req.body.remember) {
+          res.cookie('params', req.body.newsNum, { maxAge: MONTH });
+      };
+  } else {
+    res.render('index');
+  }
 });
 
 app.listen(PORT, function () {
